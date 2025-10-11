@@ -36,43 +36,29 @@ Model Used - Dlib Facial Landmark Model (.dat)
 Prerequisites
 This project relies on Dlib, which needs to be compiled from source. You must have CMake and C++ build tools installed on your system.
 
-CMake: Download CMake (ensure you add it to your system PATH during installation).
-
-C++ Build Tools: Download Visual Studio Build Tools (select the "Desktop development with C++" workload in the installer).
-
-Installation
-The most reliable way to set up the environment is by using Anaconda.
-
 Clone the repository:
 
-Bash
+git clone https://github.com/Satvik12221as/chrome-extension.git
+cd chrome-extension
 
-git clone <your-repository-url>
-cd <your-repository-name>
-Create the Conda Environment:
-This command will read the environment.yml file and automatically install the correct versions of all libraries, including the complex Dlib dependency.
+Virtual environment:
 
-Bash
+```python -m venv venv```
 
-conda env create -f environment.yml
 Activate the Environment:
 
-Bash
+```.\venv\Scripts\activate```
 
-conda activate GazeTracking
-Running the Demo
-With the environment activated, run the example script to start the webcam and see the gaze tracking in action.
+Run the file:
 
-Bash
-
-python example.py
+```python example.py```
 
 # How It Works
 The system analyzes each frame from the webcam in a multi-step pipeline:
 
-Find Your Face: Dlib’s pre-trained face detector locates a human face in the frame.
+Find Your Face: Dlib’s trained face detector locates a human face in the frame.
 
-Map Key Points: A facial landmark model places 68 specific points on the face, precisely identifying the corners of the eyes, nose, etc.
+Map Key Points: A facial landmark model places 68 specific points on the face, precisely identifying the corners of the eyes.
 
 Isolate the Eyes: The system crops the frame to create two small, isolated images of just the left and right eyes.
 
