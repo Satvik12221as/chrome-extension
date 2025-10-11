@@ -9,15 +9,15 @@ This project is an advanced, high-precision system for real-time gaze and attent
 3. The system detects Reread Events (when the user's eyes move backward on a line) and Fixation Events (when the user stares at one point for an extended time).
 
 # Core Features
-Real-Time Performance: Analyzes webcam feeds with minimal latency.
+Real-Time Performance : Analyzes webcam feeds with minimal latency.
 
-Pupil Tracking: Accurately locates the (x, y) coordinates of both pupils.
+Pupil Tracking : Accurately locates the (x, y) coordinates of both pupils.
 
-Gaze Direction: Determines if the user is looking left, right, or center.
+Gaze Direction : Determines if the user is looking left, right, or center.
 
-Blink Detection: Reliably detects when the user's eyes are closed.
+Blink Detection : Reliably detects when the user's eyes are closed.
 
-Auto-Calibration: Intelligently adapts to the user's lighting conditions to improve pupil detection robustness.
+Auto-Calibration : Intelligently adapts to the user's lighting conditions to improve pupil detection robustness.
 
 # Tech Stack & Models
 Language	Python 
