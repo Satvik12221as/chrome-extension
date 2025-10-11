@@ -1,0 +1,86 @@
+## AI-Powered Gaze & Attention Tracking System
+This project is an advanced, high-precision system for real-time gaze and attention tracking using a standard webcam. It's designed to understand a user's cognitive state by detecting high-level events like rereading or staring, and then proactively providing AI-powered assistance.
+
+The system uses a classical computer vision pipeline with Dlib for robust eye tracking and can be extended to trigger a large language model (like Gemini) to offer help when a user shows signs of confusion.
+
+# Project Architecture
+The system operates on a real-time data processing pipeline that transforms raw video from the webcam into helpful, AI-generated explanations.
+
+Input & Core Tracking: The webcam captures the video feed. A Gaze Tracking Module using OpenCV and Dlib processes each frame to detect the user's face, identify facial landmarks, and calculate the precise (x, y) gaze coordinates on the screen.
+
+Attention Event Detection: The stream of gaze coordinates is analyzed to interpret the user's behavior. The system detects Reread Events (when the user's eyes move backward on a line) and Fixation Events (when the user stares at one point for an extended time).
+
+AI-Powered Explanation: When an attention event is triggered, the system can send the on-screen context to the Gemini API, which generates a helpful explanation and displays it to the user in a popup.
+
+# Core Features
+Real-Time Performance: Analyzes webcam feeds with minimal latency.
+
+Pupil Tracking: Accurately locates the (x, y) coordinates of both pupils.
+
+Gaze Direction: Determines if the user is looking left, right, or center.
+
+Blink Detection: Reliably detects when the user's eyes are closed.
+
+Auto-Calibration: Intelligently adapts to the user's lighting conditions to improve pupil detection robustness.
+
+Simple API: Offers a clean and intuitive Python API for easy integration.
+
+# Tech Stack & Models
+Component	Technology
+Language	Python 3
+Computer Vision	OpenCV
+Face & Landmark	Dlib
+Numerical Ops	NumPy
+Dependencies	CMake & C++ Build Tools
+Model Used	Dlib Facial Landmark Model (.dat)
+
+# Getting Started
+Prerequisites
+This project relies on Dlib, which needs to be compiled from source. You must have CMake and C++ build tools installed on your system.
+
+CMake: Download CMake (ensure you add it to your system PATH during installation).
+
+C++ Build Tools: Download Visual Studio Build Tools (select the "Desktop development with C++" workload in the installer).
+
+Installation
+The most reliable way to set up the environment is by using Anaconda.
+
+Clone the repository:
+
+Bash
+
+git clone <your-repository-url>
+cd <your-repository-name>
+Create the Conda Environment:
+This command will read the environment.yml file and automatically install the correct versions of all libraries, including the complex Dlib dependency.
+
+Bash
+
+conda env create -f environment.yml
+Activate the Environment:
+
+Bash
+
+conda activate GazeTracking
+Running the Demo
+With the environment activated, run the example script to start the webcam and see the gaze tracking in action.
+
+Bash
+
+python example.py
+
+# How It Works
+The system analyzes each frame from the webcam in a multi-step pipeline:
+
+Find Your Face: Dlib’s pre-trained face detector locates a human face in the frame.
+
+Map Key Points: A facial landmark model places 68 specific points on the face, precisely identifying the corners of the eyes, nose, etc.
+
+Isolate the Eyes: The system crops the frame to create two small, isolated images of just the left and right eyes.
+
+Calibrate for Lighting: An automatic calibration routine finds the optimal black-and-white threshold to make the pupil stand out.
+
+Detect the Pupil: OpenCV finds the center of the dark pupil in the isolated eye images.
+
+Interpret Gaze: The pupil's position within the eye frame is used to determine the final gaze direction.
+
