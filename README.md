@@ -33,7 +33,8 @@ Dependencies - CMake & C++ Build Tools
 Model Used - Dlib Facial Landmark Model (.dat)
 
 # Getting Started
-Prerequisites
+Prerequisites:
+
 This project relies on Dlib, which needs to be compiled from source. You must have CMake and C++ build tools installed on your system.
 
 Clone the repository:
@@ -49,6 +50,10 @@ Virtual environment:
 Activate the Environment:
 
 ```.\venv\Scripts\activate```
+
+Install the requirements:
+
+```pip install -r requirements.txt```
 
 Run the file:
 
