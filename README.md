@@ -22,12 +22,16 @@ Blink Detection: Reliably detects when the user's eyes are closed.
 Auto-Calibration: Intelligently adapts to the user's lighting conditions to improve pupil detection robustness.
 
 # Tech Stack & Models
-Component	Technology
-Language	Python 3
+Language	Python 
+
 Computer Vision	OpenCV
+
 Face & Landmark	Dlib
+
 Numerical Ops	NumPy
+
 Dependencies	CMake & C++ Build Tools
+
 Model Used	Dlib Facial Landmark Model (.dat)
 
 # Getting Started
