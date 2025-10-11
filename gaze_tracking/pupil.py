@@ -3,10 +3,9 @@ import cv2
 
 
 class Pupil(object):
-    """
-    This class detects the iris of an eye and estimates
-    the position of the pupil
-    """
+
+    """This class detects the iris of an eye and estimates
+    the position of the pupil"""
 
     def __init__(self, eye_frame, threshold):
         self.iris_frame = None
