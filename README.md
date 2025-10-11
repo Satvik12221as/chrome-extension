@@ -21,8 +21,6 @@ Blink Detection: Reliably detects when the user's eyes are closed.
 
 Auto-Calibration: Intelligently adapts to the user's lighting conditions to improve pupil detection robustness.
 
-Simple API: Offers a clean and intuitive Python API for easy integration.
-
 # Tech Stack & Models
 Component	Technology
 Language	Python 3
