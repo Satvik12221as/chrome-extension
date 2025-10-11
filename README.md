@@ -2,13 +2,13 @@
 This project is an advanced, high-precision system for real-time gaze and attention tracking using a standard webcam. It's designed to understand a user's cognitive state by detecting events like rereading or staring, and then providing AI-powered assistance.
 
 # Project Architecture
-The system operates on a real-time data processing pipeline that transforms raw video from the webcam into helpful, AI-generated explanations.
+The system operates on a real-time data processing pipeline that transforms raw video from the webcam into helpful AI-generated explanations.
 
-Input & Core Tracking: The webcam captures the video feed. A Gaze Tracking Module using OpenCV and Dlib processes each frame to detect the user's face, identify facial landmarks, and calculate the precise (x, y) gaze coordinates on the screen.
+Input & Core Tracking: The webcam captures the video feed and A Gaze Tracking Module using OpenCV and Dlib processes each frame to detect the user's face, identify facial landmarks, and calculate the precise (x, y) gaze coordinates on the screen.
 
-Attention Event Detection: The stream of gaze coordinates is analyzed to interpret the user's behavior. The system detects Reread Events (when the user's eyes move backward on a line) and Fixation Events (when the user stares at one point for an extended time).
+Attention Event Detection: The system detects Reread Events (when the user's eyes move backward on a line) and Fixation Events (when the user stares at one point for an extended time).
 
-AI-Powered Explanation: When an attention event is triggered, the system can send the on-screen context to the Gemini API, which generates a helpful explanation and displays it to the user in a popup.
+AI-Powered Explanation: When an attention event is triggered, the system can send the on-screen context to the Gemini API which generates a helpful explanation and displays it to the user in a popup.
 
 # Core Features
 Real-Time Performance: Analyzes webcam feeds with minimal latency.
