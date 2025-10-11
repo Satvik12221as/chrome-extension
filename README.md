@@ -36,22 +36,23 @@ Model Used - Dlib Facial Landmark Model (.dat)
 Prerequisites
 This project relies on Dlib, which needs to be compiled from source. You must have CMake and C++ build tools installed on your system.
 
-# 1. Clone the repository from GitHub
-git clone https://github.com/antoinelame/GazeTracking.git
+Clone the repository:
 
-# 2. Navigate into the project directory
-cd GazeTracking
+```git clone``` https://github.com/Satvik12221as/chrome-extension.git
 
-# 3. Create the Conda environment from the provided file
-# This will automatically install Python, OpenCV, Dlib, and other libraries.
-conda env create -f environment.yml
+```cd chrome-extension```
 
-# 4. Activate the newly created environment
-conda activate GazeTracking
+Virtual environment:
 
-# 5. Run the demonstration script to start the webcam
-echo "Starting the Gaze Tracking demo... Press ESC in the new window to exit."
-python example.py
+```python -m venv venv```
+
+Activate the Environment:
+
+```.\venv\Scripts\activate```
+
+Run the file:
+
+```python example.py```
 
 # How It Works
 The system analyzes each frame from the webcam in a multi-step pipeline:
