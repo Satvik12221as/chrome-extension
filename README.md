@@ -1,7 +1,5 @@
 ## AI-Powered Gaze & Attention Tracking System
-This project is an advanced, high-precision system for real-time gaze and attention tracking using a standard webcam. It's designed to understand a user's cognitive state by detecting high-level events like rereading or staring, and then proactively providing AI-powered assistance.
-
-The system uses a classical computer vision pipeline with Dlib for robust eye tracking and can be extended to trigger a large language model (like Gemini) to offer help when a user shows signs of confusion.
+This project is an advanced, high-precision system for real-time gaze and attention tracking using a standard webcam. It's designed to understand a user's cognitive state by detecting events like rereading or staring, and then providing AI-powered assistance.
 
 # Project Architecture
 The system operates on a real-time data processing pipeline that transforms raw video from the webcam into helpful, AI-generated explanations.
