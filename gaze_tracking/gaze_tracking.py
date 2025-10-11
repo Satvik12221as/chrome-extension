@@ -1,7 +1,10 @@
 from __future__ import division
 import os
 import cv2
-import dlib
+try:
+    import dlib  # type: ignore[import]
+except Exception:
+    dlib = None
 from .eye import Eye
 from .calibration import Calibration
 
@@ -10,19 +13,28 @@ class GazeTracking(object):
     """
     This class tracks the user's gaze.
     It provides useful information like the position of the eyes
-    and pupils and allows to know if the eyes are open or closed
     """
-
     def __init__(self):
         self.frame = None
         self.eye_left = None
         self.eye_right = None
         self.calibration = Calibration()
 
+        # Ensure dlib is available
+        if dlib is None:
+            raise ImportError(
+                "The 'dlib' library is required by gaze_tracking but it is not installed or could not be imported. "
+                "Install it with 'pip install dlib' or follow platform-specific instructions: "
+                "https://pypi.org/project/dlib/."
+            )
+
         # _face_detector is used to detect faces
         self._face_detector = dlib.get_frontal_face_detector()
 
         # _predictor is used to get facial landmarks of a given face
+        cwd = os.path.abspath(os.path.dirname(__file__))
+        model_path = os.path.abspath(os.path.join(cwd, "trained_models/shape_predictor_68_face_landmarks.dat"))
+        self._predictor = dlib.shape_predictor(model_path)
         cwd = os.path.abspath(os.path.dirname(__file__))
         model_path = os.path.abspath(os.path.join(cwd, "trained_models/shape_predictor_68_face_landmarks.dat"))
         self._predictor = dlib.shape_predictor(model_path)
