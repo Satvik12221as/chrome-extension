@@ -4,9 +4,19 @@ from gaze_tracking import GazeTracking
 gaze = GazeTracking()
 webcam = cv2.VideoCapture(0)
 
+# We create a named window that can be manipulated
+WINDOW_NAME = "Gaze Tracking (Press 'f' to toggle fullscreen, 'ESC' to exit)"
+cv2.namedWindow(WINDOW_NAME, cv2.WND_PROP_FULLSCREEN)
+cv2.setWindowProperty(WINDOW_NAME, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+
+is_fullscreen = True
+
 while True:
     # We get a new frame from the webcam
     _, frame = webcam.read()
+    if frame is None:
+        print("Error: Unable to capture video")
+        break
 
     #We send this frame to GazeTracking to analyze it
     gaze.refresh(frame)
@@ -30,10 +40,22 @@ while True:
     cv2.putText(frame, "Left pupil:  " + str(left_pupil), (90, 130), cv2.FONT_HERSHEY_DUPLEX, 0.9, (147, 58, 31), 1)
     cv2.putText(frame, "Right pupil: " + str(right_pupil), (90, 165), cv2.FONT_HERSHEY_DUPLEX, 0.9, (147, 58, 31), 1)
 
-    cv2.imshow("Demo", frame)
+    cv2.imshow("WINDOW_NAME", frame)
 
-    if cv2.waitKey(1) == 27:
+    # --- NEW: Check for key presses for fullscreen toggle and exit ---
+    key = cv2.waitKey(1) & 0xFF
+
+    # Press 'f' to toggle fullscreen mode
+    if key == ord('f'):
+        is_fullscreen = not is_fullscreen
+        if is_fullscreen:
+            cv2.setWindowProperty(WINDOW_NAME, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+        else:
+            cv2.setWindowProperty(WINDOW_NAME, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_NORMAL)
+
+    # Press ESC (key code 27) to exit
+    elif key == 27:
         break
-   
+
 webcam.release()
 cv2.destroyAllWindows()
