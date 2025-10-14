@@ -42,7 +42,7 @@ while True:
 
     cv2.imshow("WINDOW_NAME", frame)
 
-    # --- NEW: Check for key presses for fullscreen toggle and exit ---
+    # Check for key presses for fullscreen toggle and exit 
     key = cv2.waitKey(1) & 0xFF
 
     # Press 'f' to toggle fullscreen mode
