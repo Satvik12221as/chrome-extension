@@ -18,7 +18,7 @@ while True:
         print("Error: Unable to capture video")
         break
 
-    # We send this frame to GazeTracking to analyze it
+    # we send this frame to GazeTracking to analyze it
     gaze.refresh(frame)
 
     frame = gaze.annotated_frame()
