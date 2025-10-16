@@ -24,6 +24,9 @@ while True:
     frame = gaze.annotated_frame()
     text = ""
 
+    if gaze.is_staring():
+        text = 'Staring detected'
+
     if gaze.is_blinking():
         text = "Blinking"
     elif gaze.is_right():

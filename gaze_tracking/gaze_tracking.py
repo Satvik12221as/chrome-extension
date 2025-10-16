@@ -7,7 +7,50 @@ except Exception:
     dlib = None
 from .eye import Eye
 from .calibration import Calibration
+import time  
+from collections import deque 
 
+class FixationDetector(object):
+    """
+    Detects fixations (staring) by checking if gaze points stay
+    within a small area for a certain duration.
+    """
+    def __init__(self, min_duration=5.0, dispersion_threshold=0.03, buffer_size=300):
+        self.min_duration_seconds = min_duration
+        self.dispersion_threshold = dispersion_threshold # How spread out the points can be
+        self.buffer = deque(maxlen=buffer_size) # Stores recent (timestamp, gaze_point)
+        self.is_fixating = False
+
+    def feed(self, timestamp, gaze_point):
+        """Adds a new gaze point to the buffer and checks for a fixation."""
+        if gaze_point is None:
+            self.is_fixating = False
+            return
+
+        self.buffer.append((timestamp, gaze_point))
+
+        # Not enough data to be a fixation yet
+        if len(self.buffer) < 10:
+            self.is_fixating = False
+            return
+
+        # Check the duration of points in the buffer
+        duration = self.buffer[-1][0] - self.buffer[0][0]
+        if duration < self.min_duration_seconds:
+            self.is_fixating = False
+            return
+
+        # If duration is long enough, check the dispersion (how spread out the points are)
+        points = [p[1] for p in self.buffer]
+        xs = [p[0] for p in points]
+        ys = [p[1] for p in points]
+
+        dispersion = (max(xs) - min(xs)) + (max(ys) - min(ys))
+
+        if dispersion < self.dispersion_threshold:
+            self.is_fixating = True
+        else:
+            self.is_fixating = False
 
 class GazeTracking(object):
     """
@@ -19,24 +62,16 @@ class GazeTracking(object):
         self.eye_left = None
         self.eye_right = None
         self.calibration = Calibration()
+        
+        # This creates the new fixation detector
+        self.fixation_detector = FixationDetector()
 
-        # Ensure dlib is available
-        if dlib is None:
-            raise ImportError(
-                "The 'dlib' library is required by gaze_tracking but it is not installed or could not be imported. "
-                "Install it with 'pip install dlib' or follow platform-specific instructions: "
-                "https://pypi.org/project/dlib/."
-            )
-
-        # _face_detector is used to detect faces
+        # This creates the face detector
         self._face_detector = dlib.get_frontal_face_detector()
 
-        # _predictor is used to get facial landmarks of a given face
-        cwd = os.path.abspath(os.path.dirname(__file__))
-        model_path = os.path.abspath(os.path.join(cwd, "trained_models/shape_predictor_68_face_landmarks.dat"))
-        self._predictor = dlib.shape_predictor(model_path)
-        cwd = os.path.abspath(os.path.dirname(__file__))
-        model_path = os.path.abspath(os.path.join(cwd, "trained_models/shape_predictor_68_face_landmarks.dat"))
+        # This loads the facial landmark model
+        cwd = os.path.dirname(__file__)
+        model_path = os.path.join(cwd, "trained_models/shape_predictor_68_face_landmarks.dat")
         self._predictor = dlib.shape_predictor(model_path)
 
     @property
@@ -60,6 +95,8 @@ class GazeTracking(object):
             landmarks = self._predictor(frame, faces[0])
             self.eye_left = Eye(frame, landmarks, 0, self.calibration)
             self.eye_right = Eye(frame, landmarks, 1, self.calibration)
+        
+        
 
         except IndexError:
             self.eye_left = None
@@ -128,7 +165,12 @@ class GazeTracking(object):
         if self.pupils_located:
             blinking_ratio = (self.eye_left.blinking + self.eye_right.blinking) / 2
             return blinking_ratio > 3.8
-
+        
+    def is_staring(self):
+        """
+        Returns true if the user is staring at a single point.
+        """
+        return self.fixation_detector.is_fixating
     def annotated_frame(self):
         """Returns the main frame with pupils highlighted"""
         frame = self.frame.copy()
