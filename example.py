@@ -4,7 +4,7 @@ from gaze_tracking import GazeTracking
 gaze = GazeTracking()
 webcam = cv2.VideoCapture(0)
 
-# We create a named window that can be manipulated
+# we create a named window that can be manipulated
 WINDOW_NAME = "Gaze Tracking (Press 'f' to toggle fullscreen, 'ESC' to exit)"
 cv2.namedWindow(WINDOW_NAME, cv2.WND_PROP_FULLSCREEN)
 cv2.setWindowProperty(WINDOW_NAME, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
