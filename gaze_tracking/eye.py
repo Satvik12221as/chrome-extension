@@ -7,7 +7,7 @@ from .pupil import Pupil
 class Eye(object):
 
     """This class creates a new frame to isolate the eye and
-    initiates the pupil detection."""
+    initiates the pupil detection"""
 
     LEFT_EYE_POINTS = [36, 37, 38, 39, 40, 41]
     RIGHT_EYE_POINTS = [42, 43, 44, 45, 46, 47]
