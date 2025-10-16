@@ -44,9 +44,6 @@ class Calibration(object):
     def find_best_threshold(eye_frame):
         """Calculates the optimal threshold to binarize the
         frame for the given eye.
-
-        Argument:
-            eye_frame (numpy.ndarray): Frame of the eye to be analyzed
         """
         average_iris_size = 0.48
         trials = {}
