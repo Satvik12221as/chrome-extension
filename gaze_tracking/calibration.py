@@ -30,11 +30,9 @@ class Calibration(object):
 
     @staticmethod
     def iris_size(frame):
-        """Returns the percentage of space that the iris takes up on
+        """
+        Returns the percentage of space that the iris takes up on
         the surface of the eye.
-
-        Argument:
-            frame (numpy.ndarray): Binarized iris frame
         """
         frame = frame[5:-5, 5:-5]
         height, width = frame.shape[:2]
