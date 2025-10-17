@@ -14,7 +14,7 @@ class FixationDetector(object):
     Detects fixations (staring) by checking if gaze points stay
     within a small area for a certain duration.
     """
-    def __init__(self, min_duration=5.0, dispersion_threshold=50, buffer_size=150):
+    def __init__(self, min_duration=5.0, dispersion_threshold=20, buffer_size=150):
         self.min_duration_seconds = min_duration
         self.dispersion_threshold_pixels = dispersion_threshold
         self.buffer = deque(maxlen=buffer_size)
