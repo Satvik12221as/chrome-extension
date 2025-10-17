@@ -4,30 +4,29 @@ from gaze_tracking import GazeTracking
 gaze = GazeTracking()
 webcam = cv2.VideoCapture(0)
 
-# We create a named window that can be manipulated
-WINDOW_NAME = "Gaze Tracking (Press 'f' to toggle fullscreen, 'ESC' to exit)"
-cv2.namedWindow(WINDOW_NAME, cv2.WND_PROP_FULLSCREEN)
-cv2.setWindowProperty(WINDOW_NAME, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
-
-is_fullscreen = True
-
 while True:
     # We get a new frame from the webcam
     _, frame = webcam.read()
-    if frame is None:
-        print("Error: Unable to capture video")
-        break
 
-    # we send this frame to GazeTracking to analyze it
+    # We send this frame to GazeTracking to analyze it
     gaze.refresh(frame)
 
     frame = gaze.annotated_frame()
     text = ""
+    color = (147, 58, 31) # Default text color
 
+    # --- NEW: Check for staring first, as it's the most important event ---
     if gaze.is_staring():
-        text = 'Staring detected'
+        text = "Staring Detected!"
+        color = (0, 0, 255) # Red for staring
+        
+        # This is the "popup" signal: draw a red box around the gaze point
+        gaze_point = gaze.gaze_coords()
+        if gaze_point:
+            x, y = gaze_point
+            cv2.rectangle(frame, (x - 40, y - 40), (x + 40, y + 40), color, 2)
 
-    if gaze.is_blinking():
+    elif gaze.is_blinking():
         text = "Blinking"
     elif gaze.is_right():
         text = "Looking right"
@@ -36,29 +35,19 @@ while True:
     elif gaze.is_center():
         text = "Looking center"
 
-    cv2.putText(frame, text, (90, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
+    # Display the main text (e.g., "Staring Detected!")
+    cv2.putText(frame, text, (90, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, color, 2)
 
+    # Display pupil coordinates
     left_pupil = gaze.pupil_left_coords()
     right_pupil = gaze.pupil_right_coords()
     cv2.putText(frame, "Left pupil:  " + str(left_pupil), (90, 130), cv2.FONT_HERSHEY_DUPLEX, 0.9, (147, 58, 31), 1)
     cv2.putText(frame, "Right pupil: " + str(right_pupil), (90, 165), cv2.FONT_HERSHEY_DUPLEX, 0.9, (147, 58, 31), 1)
 
-    cv2.imshow("WINDOW_NAME", frame)
+    cv2.imshow("Gaze Tracking", frame)
 
-    # Check for key presses for fullscreen toggle and exit 
-    key = cv2.waitKey(1) & 0xFF
-
-    # Press 'f' to toggle fullscreen mode
-    if key == ord('f'):
-        is_fullscreen = not is_fullscreen
-        if is_fullscreen:
-            cv2.setWindowProperty(WINDOW_NAME, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
-        else:
-            cv2.setWindowProperty(WINDOW_NAME, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_NORMAL)
-
-    # Press ESC (key code 27) to exit
-    elif key == 27:
+    if cv2.waitKey(1) == 27:
         break
-
+   
 webcam.release()
 cv2.destroyAllWindows()
