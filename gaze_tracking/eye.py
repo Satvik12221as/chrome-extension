@@ -24,7 +24,6 @@ class Eye(object):
     @staticmethod
     def _middle_point(p1, p2):
         """returns the middle point (x,y) between two points
-
         Arguments:
             p1 (dlib.point): First point
             p2 (dlib.point): Second point
