@@ -5,7 +5,7 @@ from gaze_tracking.pupil import Pupil
 
 class Calibration(object):
 
-    """This class calibrates the pupil detection algorithm by finding the
+    """T his class calibrates the pupil detection algorithm by finding the
     best binarization threshold value for the person and the webcam."""
 
     def __init__(self):
