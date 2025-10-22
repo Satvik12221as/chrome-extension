@@ -31,6 +31,7 @@ class Calibration(object):
         Returns the percentage of space that the iris takes up on
         the surface of the eye.
         """
+        
         frame = frame[5:-5, 5:-5]
         height, width = frame.shape[:2]
         nb_pixels = height * width
