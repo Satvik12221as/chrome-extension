@@ -56,6 +56,7 @@ class Calibration(object):
     def evaluate(self, eye_frame, side):
         """Improves calibration by taking into consideration the
         given image.
+        
         Arguments:
             eye_frame (numpy.ndarray): Frame of the eye
             side: Indicates whether it's the left eye (0) or the right eye (1)
