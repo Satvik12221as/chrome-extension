@@ -19,9 +19,6 @@ class Calibration(object):
 
     def threshold(self, side):
         """Returns the threshold value for the given eye.
-
-        Argument:
-            side: Indicates whether it's the left eye (0) or the right eye (1)
         """
         if side == 0:
             return int(sum(self.thresholds_left) / len(self.thresholds_left))
