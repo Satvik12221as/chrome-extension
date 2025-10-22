@@ -31,7 +31,7 @@ class Calibration(object):
         Returns the percentage of space that the iris takes up on
         the surface of the eye.
         """
-        
+
         frame = frame[5:-5, 5:-5]
         height, width = frame.shape[:2]
         nb_pixels = height * width
@@ -41,7 +41,7 @@ class Calibration(object):
     @staticmethod
     def find_best_threshold(eye_frame):
         """Calculates the optimal threshold to binarize the
-        frame for the given eye.
+        frame for the given eye
         """
         average_iris_size = 0.48
         trials = {}
