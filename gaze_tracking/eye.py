@@ -89,7 +89,6 @@ class Eye(object):
     def _analyze(self, original_frame, landmarks, side, calibration):
         """Detects and isolates the eye in a new frame, sends data to the calibration
         and initializes Pupil object.
-
         Arguments:
             original_frame (numpy.ndarray): Frame passed by the user
             landmarks (dlib.full_object_detection): Facial landmarks for the face region
