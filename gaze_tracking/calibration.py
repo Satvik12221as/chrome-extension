@@ -18,7 +18,9 @@ class Calibration(object):
         return len(self.thresholds_left) >= self.nb_frames and len(self.thresholds_right) >= self.nb_frames
 
     def threshold(self, side):
-        """Returns the threshold value for the given eye.
+        """
+        Returns the threshold value for the given eye.
+
         """
         if side == 0:
             return int(sum(self.thresholds_left) / len(self.thresholds_left))
@@ -56,7 +58,7 @@ class Calibration(object):
     def evaluate(self, eye_frame, side):
         """Improves calibration by taking into consideration the
         given image.
-        
+
         Arguments:
             eye_frame (numpy.ndarray): Frame of the eye
             side: Indicates whether it's the left eye (0) or the right eye (1)
