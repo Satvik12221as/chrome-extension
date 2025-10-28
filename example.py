@@ -58,7 +58,7 @@ while True:
         cv2.putText(frame, "Right pupil: " + str(right_pupil), (90, 165), cv2.FONT_HERSHEY_DUPLEX, 0.9, (147, 58, 31), 1)
 
     # -- 5. Draw the button on the screen in every frame -
-    # The button's color and text change based on the mode.
+    # The button's color and text change based on the mode
     frame_width = int(webcam.get(cv2.CAP_PROP_FRAME_WIDTH))
     button_top_left = (frame_width - 250, 10)
     button_bottom_right = (frame_width - 10, 60)
