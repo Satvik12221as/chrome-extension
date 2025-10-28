@@ -17,7 +17,7 @@ def toggle_reading_mode(event, x, y, flags, param):
             reading_mode_enabled = not reading_mode_enabled
             print(f"Reading Mode Toggled: {'ON' if reading_mode_enabled else 'OFF'}")
 
-# --- Setup the gaze tracker and webcam ---
+# --- Setup the gaze tracker and webcam --
 gaze = GazeTracking()
 webcam = cv2.VideoCapture(0)
 
