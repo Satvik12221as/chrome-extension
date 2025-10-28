@@ -64,7 +64,7 @@ while True:
     button_bottom_right = (frame_width - 10, 60)
 
     if reading_mode_enabled:
-        # Green button for "ON" state.
+        # Green button for "ON" state
         button_color = (0, 180, 0)
         button_text = "Reading Mode: ON"
     else:
