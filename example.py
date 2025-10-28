@@ -68,7 +68,7 @@ while True:
         button_color = (0, 180, 0)
         button_text = "Reading Mode: ON"
     else:
-        # Red button for "OFF" state
+        # Red button for "OFF" state.
         button_color = (0, 0, 180)
         button_text = "Reading Mode: OFF"
     
