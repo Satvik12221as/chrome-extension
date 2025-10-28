@@ -48,7 +48,7 @@ while True:
         elif gaze.is_center():
             text = "Looking center"
 
-        #Display the gaze direction text
+        # Display the gaze direction text
         cv2.putText(frame, text, (90, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
 
         # Display pupil coordinates
