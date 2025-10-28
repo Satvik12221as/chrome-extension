@@ -10,7 +10,7 @@ def toggle_reading_mode(event, x, y, flags, param):
     """Toggles the reading mode when the button is clicked."""
     global reading_mode_enabled
     # The button will be in the top-right corner, 250px wide and 50px tall.
-    # We check if the left mouse button was clicked inside these coordinates.
+    # We check if the left mouse button was clicked inside these coordinates
     if event == cv2.EVENT_LBUTTONDOWN:
         frame_width = int(webcam.get(cv2.CAP_PROP_FRAME_WIDTH))
         if (frame_width - 250) < x < frame_width and 10 < y < 60:
