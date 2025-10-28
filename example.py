@@ -51,7 +51,7 @@ while True:
         # Display the gaze direction text
         cv2.putText(frame, text, (90, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
 
-        # Display pupil coordinates
+        # Display pupil coordinate
         left_pupil = gaze.pupil_left_coords()
         right_pupil = gaze.pupil_right_coords()
         cv2.putText(frame, "Left pupil:  " + str(left_pupil), (90, 130), cv2.FONT_HERSHEY_DUPLEX, 0.9, (147, 58, 31), 1)
