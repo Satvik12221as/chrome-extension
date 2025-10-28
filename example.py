@@ -35,7 +35,7 @@ while True:
         # Send the frame to GazeTracking to analyze it.
         gaze.refresh(frame)
 
-        # Get the annotated frame with pupil crosse
+        # Get the annotated frame with pupil crosses
         frame = gaze.annotated_frame()
         text = ""
 
