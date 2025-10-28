@@ -32,7 +32,7 @@ while True:
 
     # --- 4. The main logic: Only track gaze if reading mode is ON ---
     if reading_mode_enabled:
-        # Send the frame to GazeTracking to analyze it
+        # Send the frame to GazeTracking to analyze it.
         gaze.refresh(frame)
 
         # Get the annotated frame with pupil crosses
