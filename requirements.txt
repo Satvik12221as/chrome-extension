@@ -2,6 +2,3 @@ dlib
 numpy
 opencv-python
 setuptools
-fastapi
-uvicorn
-websockets
