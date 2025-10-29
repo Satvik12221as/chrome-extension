@@ -5,7 +5,7 @@ import numpy as np
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from gaze_tracking import GazeTracking
 
-# --- 1. Initialize FastAPI ---
+# -- 1. Initialize FastAPI --
 # This is the line that was missing or incorrect.
 # It creates the application object named "app".
 app = FastAPI()
