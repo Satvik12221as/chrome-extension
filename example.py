@@ -1,6 +1,9 @@
 import cv2
 from gaze_tracking import GazeTracking
 
+loading_frame = np.zeros((480, 640, 3), np.uint8)
+loading_frame[:] = (255, 255, 255)
+cv2.putText(loading_frame, "Loading...", (200, 300), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 0), 3)
 # --- 1. Global variables to manage the state ---
 reading_mode_enabled = False
 WINDOW_NAME = "Gaze Tracking - Press ESC to Exit"
@@ -18,13 +21,16 @@ def toggle_reading_mode(event, x, y, flags, param):
 # --- Setup the gaze tracker and webcam ---
 gaze = GazeTracking()
 webcam = cv2.VideoCapture(0)
-
-# --- 3. Create a window and link our mouse click function to it ---
-cv2.namedWindow(WINDOW_NAME)
-cv2.setMouseCallback(WINDOW_NAME, toggle_reading_mode)
-
 while True:
     _, frame = webcam.read()
+    if frame is None:
+        cv2.imshow(WINDOW_NAME, loading_frame)
+        if cv2.waitKey(1) == 27: 
+            break
+        continue
+    # --- 4. Main Logic: Only track gaze if reading mode is ON ---
+    if reading_mode_enabled:
+        gaze.refresh(frame)
     if frame is None:
         break
 
