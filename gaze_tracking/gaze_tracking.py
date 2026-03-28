@@ -1,11 +1,14 @@
 from __future__ import division
 import os
+import numpy as np
 import cv2
 import dlib
 from .eye import Eye
 from .calibration import Calibration
 import time
 from collections import deque
+
+class GazeTracking(object):
 import numpy as np
 
 # NEW: Class to detect fixations (staring)
@@ -24,14 +27,17 @@ class FixationDetector(object):
     def feed(self, timestamp, gaze_point_pixels):
         """Adds a new gaze point to the buffer and checks for a fixation."""
         # If we can't see the pupils, reset the fixation
-        if gaze_point_pixels is None:
-            self.is_fixating = False
-            self.buffer.clear()
-            return
+        self._predictor = dlib.shape_predictor(model_path)
+        self.loading_frame = np.zeros((480, 640, 3), np.uint8)
+        self.loading_frame[:] = (255, 255, 255)
+        cv2.putText(self.loading_frame, "Loading...", (200, 300), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 0), 3)
 
-        self.buffer.append({'time': timestamp, 'point': gaze_point_pixels})
+    def refresh(self, frame):
+        if frame is None:
+            return self.loading_frame
+        self.frame = frame
+        self._analyze()
 
-        # Calculate the duration of the gaze points currently in our buffer
         duration = self.buffer[-1]['time'] - self.buffer[0]['time']
 
         # If the duration is less than our 5-second requirement, it's not a fixation
