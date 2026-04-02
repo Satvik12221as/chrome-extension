@@ -10,24 +10,24 @@ class Pupil(object):
     def __init__(self, eye_frame, threshold):
         self.iris_frame = None
         self.threshold = threshold
-        self.x = None
-        self.y = None
+    def __init__(self, eye_frame, threshold):
+        self.iris_frame = None
+        self.threshold = threshold
+        self.x = 0
+        self.y = 0
 
         self.detect_iris(eye_frame)
 
+
+        Arguments:
+            eye_frame (numpy.ndarray): Frame containing an eye and nothing else
     @staticmethod
     def image_processing(eye_frame, threshold):
         """Performs operations on the eye frame to isolate the iris
-
         Arguments:
             eye_frame (numpy.ndarray): Frame containing an eye and nothing else
             threshold (int): Threshold value used to binarize the eye frame
 
-        Returns:
-            A frame with a single element representing the iris
-        """
-        kernel = np.ones((3, 3), np.uint8)
-        new_frame = cv2.bilateralFilter(eye_frame, 10, 15, 15)
         new_frame = cv2.erode(new_frame, kernel, iterations=3)
         new_frame = cv2.threshold(new_frame, threshold, 255, cv2.THRESH_BINARY)[1]
 
