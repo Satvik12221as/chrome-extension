@@ -31,11 +31,11 @@ class Calibration(object):
     def iris_size(frame):
         """
         Returns the percentage of space that the iris takes up on
-        the surface of the eye.
-        """
+        if side == 0:
+            return int(sum(self.thresholds_left) / len(self.thresholds_left))
+        elif side == 1:
+            return int(sum(self.thresholds_right) / max(len(self.thresholds_right), 1))
 
-        frame = frame[5:-5, 5:-5]
-        height, width = frame.shape[:2]
         nb_pixels = height * width
         nb_blacks = nb_pixels - cv2.countNonZero(frame)
         return nb_blacks / nb_pixels
@@ -51,9 +51,9 @@ class Calibration(object):
         for threshold in range(5, 100, 5):
             iris_frame = Pupil.image_processing(eye_frame, threshold)
             trials[threshold] = Calibration.iris_size(iris_frame)
-
-        best_threshold, iris_size = min(trials.items(), key=(lambda p: abs(p[1] - average_iris_size)))
-        return best_threshold
+        for threshold in range(5, 100, 5):
+            iris_frame = Pupil.image_processing(eye_frame, threshold)
+            trials[threshold] = Calibration.iris_size(eye_frame)
 
     def evaluate(self, eye_frame, side):
         """Improves calibration by taking into consideration the
