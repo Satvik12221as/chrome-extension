@@ -70,11 +70,11 @@ class Eye(object):
         Arguments:
             landmarks (dlib.full_object_detection): Facial landmarks for the face region
             points (list): Points of an eye (from the 68 Multi-PIE landmarks)
-        """
-        left = (landmarks.part(points[0]).x, landmarks.part(points[0]).y)
-        right = (landmarks.part(points[3]).x, landmarks.part(points[3]).y)
-        top = self._middle_point(landmarks.part(points[1]), landmarks.part(points[2]))
-        bottom = self._middle_point(landmarks.part(points[5]), landmarks.part(points[4]))
+        self._isolate(original_frame, landmarks, points)
+
+        if not calibration.is_complete():
+            calibration.evaluate(self.frame, side, original_frame)
+
 
         eye_width = math.hypot((left[0] - right[0]), (left[1] - right[1]))
         eye_height = math.hypot((top[0] - bottom[0]), (top[1] - bottom[1]))
@@ -101,10 +101,10 @@ class Eye(object):
             points = self.RIGHT_EYE_POINTS
         else:
             return
-
-        self.blinking = self._blinking_ratio(landmarks, points)
-        self._isolate(original_frame, landmarks, points)
-
+        try:
+            moments = cv2.moments(contours[-2])
+            self.x = int(moments['m10'] / max(moments['m00'], 1))
+            self.y = int(moments['m01'] / max(moments['m00'], 1))
         if not calibration.is_complete():
             calibration.evaluate(self.frame, side)
 
